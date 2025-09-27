@@ -1,0 +1,21 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css";
+
+/* style.css */
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+}
+
+
+#chatBox {
+  background: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+
+.user { color: blue; margin: 5px 0; }
+.bot { color: green; margin: 5px 0; }
