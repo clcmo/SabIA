@@ -1,6 +1,6 @@
 // firebase-config.js
 const firebaseConfig = {
-  apiKey: "AIzaSyCn6EAGA69qZ9UtCcscQlnmisZrqsd8S4c",
+  apiKey: "{{ secrets.FIREBASE_TOKEN }}",
   authDomain: "sabia-projeto.firebaseapp.com",
   projectId: "sabia-projeto",
   storageBucket: "sabia-projeto.firebasestorage.app",
