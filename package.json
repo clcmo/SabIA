@@ -1,0 +1,18 @@
+{
+  "name": "sabia",
+  "version": "1.0.0",
+  "description": "Chatbot educacional inteligente",
+  "main": "public/js/app.js",
+  "scripts": {
+    "config": "node scripts/generate-config.js",
+    "start": "firebase serve",
+    "dev": "npm run config && firebase emulators:start",
+    "deploy": "npm run config && firebase deploy"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.0.0"
+  }
+}
