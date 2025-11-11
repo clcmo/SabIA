@@ -1,22 +1,52 @@
 # .github/workflows/deploy.yml
-name: Deploy sabIA to Firebase
+name: Deploy SabIA
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout código
-      uses: actions/checkout@v5
-
+      uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
     - name: Instalar Firebase CLI
       run: npm install -g firebase-tools
-
-    - name: Autenticar no Firebase
+    
+    - name: Criar firebase-config.js a partir dos secrets
+      run: |
+        cat > public/assets/js/firebase-config.js << EOF
+        // firebase-config.js (gerado automaticamente no deploy)
+        const firebaseConfig = {
+          apiKey: "${{ secrets.FIREBASE_API_KEY }}",
+          authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
+          projectId: "${{ secrets.FIREBASE_PROJECT_ID }}",
+          storageBucket: "${{ secrets.FIREBASE_STORAGE_BUCKET }}",
+          messagingSenderId: "${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}",
+          appId: "${{ secrets.FIREBASE_APP_ID }}",
+          measurementId: "${{ secrets.FIREBASE_MEASUREMENT_ID }}"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        export { db, firebaseConfig };
+        EOF
+    
+    - name: Deploy para Firebase
+      run: |
+        firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}" --only hosting
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      run: firebase deploy --only hosting --token "$FIREBASE_TOKEN"
+    
+    - name: Limpar arquivo gerado
+      if: always()
+      run: rm -f public/js/firebase-config.js
