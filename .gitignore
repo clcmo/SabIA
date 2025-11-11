@@ -1,0 +1,20 @@
+/functions/
+/dataconnect/
+
+# Secrets
+.env
+.env.local
+secrets.txt
+firebase-config.js
+public/js/firebase-config.js
+
+# Firebase
+.firebase/
+*-debug.log
+
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+EOF
