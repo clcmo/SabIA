@@ -1,17 +1,47 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Sabia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SabIA - Seu Assistente de Estudos</title>
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-  <h1>Apprendendo com o Sabiá</h1>
-  <div id="chatBox"></div>
-  <input type="text" id="userInput" placeholder="Digite sua dúvida...">
-  <button id="sendBtn">Enviar</button>
-  <script src="./assets/js/firebase-config.js"></script>
+  <div class="container">
+    <header class="chat-header">
+      <div class="header-content">
+        <h1>🐦 SabIA</h1>
+        <p>Seu assistente inteligente de estudos</p>
+      </div>
+      <button id="clearBtn" class="btn-clear" title="Limpar conversa">
+        🗑️
+      </button>
+    </header>
+
+    <div id="chatBox" class="chat-box">
+      <!-- Mensagens aparecerão aqui -->
+    </div>
+
+    <div class="input-container">
+      <textarea 
+        id="userInput" 
+        placeholder="Digite sua pergunta... (Ex: Como usar React Hooks?)"
+        rows="1"
+        maxlength="500"
+      ></textarea>
+      <button id="sendBtn" class="btn-send" title="Enviar mensagem">
+        ➤
+      </button>
+    </div>
+
+    <div class="footer-info">
+      <small>
+        💡 <strong>Dica:</strong> Digite <code>/help</code> para ver todos os comandos
+      </small>
+    </div>
+  </div>
+
+  <!-- Scripts com ES6 Modules -->
   <script type="module" src="./assets/js/app.js"></script>
 </body>
 </html>
