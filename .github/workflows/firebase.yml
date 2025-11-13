@@ -24,7 +24,7 @@ jobs:
     
     - name: Create firebase-config.js
       run: |
-        cat > public/js/firebase-config.js << 'EOF'
+        cat > public/assets/js/firebase-config.js << 'EOF'
         const firebaseConfig = {
           apiKey: "${{ secrets.FIREBASE_API_KEY }}",
           authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
@@ -46,4 +46,4 @@ jobs:
     
     - name: Cleanup
       if: always()
-      run: rm -f public/js/firebase-config.js
+      run: rm -f public/assets/js/firebase-config.js

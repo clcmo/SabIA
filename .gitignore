@@ -6,7 +6,7 @@
 .env.local
 secrets.txt
 firebase-config.js
-public/js/firebase-config.js
+# public/js/firebase-config.js
 
 # Firebase
 .firebase/
