@@ -1,0 +1,30 @@
+// firestore.rules
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /chat/{messageId} {
+      function isValid() {
+        let data = request.resource.data;
+        return data.keys().hasAll(['user', 'bot', 'timestamp']) &&
+               data.user is string &&
+               data.bot is string &&
+               data.user.size() > 0 && data.user.size() <= 500 &&
+               data.bot.size() > 0 && data.bot.size() <= 2000 &&
+               data.timestamp is timestamp;
+      }
+      
+      function hasNoBlockedWords() {
+        let msg = request.resource.data.user.lower();
+        return !msg.matches('(?i)(spam|viagra|casino|porn|xxx|hack)');
+      }
+      
+      allow create: if isValid() && hasNoBlockedWords();
+      allow read: if true;
+      allow update, delete: if false;
+    }
+    
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

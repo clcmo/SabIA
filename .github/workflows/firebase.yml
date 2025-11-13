@@ -1,16 +1,17 @@
-# .github/workflows/deploy.yml
 name: Deploy SabIA
+run-name: ${{ github.actor }} está buscando fazer deploy do Firebase
 
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout código
+    - name: Checkout
       uses: actions/checkout@v3
     
     - name: Setup Node.js
@@ -18,13 +19,12 @@ jobs:
       with:
         node-version: '18'
     
-    - name: Instalar Firebase CLI
+    - name: Install Firebase CLI
       run: npm install -g firebase-tools
     
-    - name: Criar firebase-config.js a partir dos secrets
+    - name: Create firebase-config.js
       run: |
-        cat > public/assets/js/firebase-config.js << EOF
-        // firebase-config.js (gerado automaticamente no deploy)
+        cat > public/js/firebase-config.js << 'EOF'
         const firebaseConfig = {
           apiKey: "${{ secrets.FIREBASE_API_KEY }}",
           authDomain: "${{ secrets.FIREBASE_AUTH_DOMAIN }}",
@@ -41,12 +41,9 @@ jobs:
         export { db, firebaseConfig };
         EOF
     
-    - name: Deploy para Firebase
-      run: |
-        firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}" --only hosting
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    - name: Deploy to Firebase
+      run: firebase deploy --token "${{ secrets.FIREBASE_TOKEN }}"
     
-    - name: Limpar arquivo gerado
+    - name: Cleanup
       if: always()
       run: rm -f public/js/firebase-config.js
