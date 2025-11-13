@@ -43,7 +43,7 @@ jobs:
     
     - name: Deploy to Firebase
       run: | 
-        firebase deploy --project ${{ secrets.FIREBASE_PROJECT_ID }} --token "${{ secrets.FIREBASE_TOKEN }}"
+        firebase target:apply hosting ${{ secrets.FIREBASE_STORAGE_BUCKET }} ${{ secrets.FIREBASE_PROJECT_ID }}  --token "${{ secrets.FIREBASE_TOKEN }}"
     
     - name: Cleanup
       if: always()
